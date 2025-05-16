@@ -32,7 +32,7 @@ senha: admin123
 
 ```bash
 git clone https://github.com/josevflores911/ecommerce-.git
-cd ecommerce-```
+cd ecommerce- ```
 
 ### 2. Configurar el entorno
 
