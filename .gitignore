@@ -1,0 +1,33 @@
+# Diretórios comuns
+/assets/styles
+/assets/images
+/vendor/           # Pacotes do Composer
+/node_modules/     # Caso use Node para assets
+/delete
+
+# Arquivos de configuração e cache
+.env               # Arquivo com variáveis de ambiente
+.env.*             # Outros arquivos .env (como .env.local)
+*.log              # Logs de erros
+*.cache
+*.tmp
+*.bak
+*.swp              # Arquivos temporários de editores
+
+# Cache e arquivos de sessões
+/storage/
+*.sqlite
+*.sqlite3
+
+# IDEs e editores
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Sistema operacional
+.DS_Store          # macOS
+Thumbs.db          # Windows
+
+# Outros
+composer.lock      # Opcional: se preferir fixar dependências, remova

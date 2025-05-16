@@ -1,62 +1,13 @@
-/* Reset & Base */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #1e1e1e;
-    color: #f9f9f9;
-}
-
-/* Header */
-.main-header {
-    background: #333;
-    color: #fff;
-    padding: 15px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-}
-
-/* Sidebar Toggle */
-.sidebar-btn {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-/* Header Right */
-.header-right {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-}
-
-/* Sidebar */
-.sidebar {
-    width: 220px;
-    background-color: #292929;
-    color: #fff;
-    padding: 20px;
-    position: fixed;
-    top: 60px;
-    left: -220px;
-    height: calc(100vh - 60px);
-    overflow-y: auto;
-    transition: left 0.3s ease;
-}
-.sidebar.show {
-    left: 0;
-}
-
 /* Main Area */
 .content-area {
+    /* display: flex;
+    margin-top: 70px;
+    margin-left: 220px;
+    padding: 20px;
+    gap: 5%; */
+}
+
+.contenido{
     display: flex;
     margin-top: 70px;
     margin-left: 220px;
@@ -123,4 +74,8 @@ body {
     padding: 20px;
     border-radius: 8px;
     min-width: 200px;
+}
+
+.confirmar{
+    background-color: #322fcc;
 }

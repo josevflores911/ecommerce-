@@ -48,11 +48,21 @@ $(document).ready(()=> {
   
                 if (resp.erro == '0') {
                     $principal = $("div.load_pages");
-                    var parms = {id_user : resp.id_user, nm_user : resp.nm_user};    
+                    var parms = {id_user : resp.id_user, nm_user : resp.nm_user, produtos:resp.produtos};    
                   
                     $.post("views/main_page.php", parms, (data) => {
-                        $principal.html("");
-                        $principal.html(data);
+                      $principal.html("");
+                      $principal.html(data);
+                      
+                      const content = $(".content-area")
+
+                      
+                      $.post("views/buy_page.php", parms, (ev) => {
+                        content.html("");
+                        content.html(ev);
+              
+                      });  
+
                     });
                 } else {
                   mudou_senha = false; 
