@@ -10,7 +10,7 @@ $senha = isset($_POST['senha']) ? trim($_POST['senha']) : '';
 
 $response = [
     'erro' => '1',
-    'message' => 'Usurio ou senha invlidos.'
+    'message' => 'Usuario ou senha invalidos.'
 ];
 
 // Decode password 
@@ -19,23 +19,23 @@ if (strpos($senha, ';') !== false) {
 }
 
 // Decode masked password (if contains ";")
+// return base64_decode($encoded);
 function decode_password($encoded) {
-    // return base64_decode($encoded);
     $chars = explode(';', rtrim($encoded, ';'));
     $decoded = '';
+
     foreach ($chars as $char) {
         if ($char !== '') {
-            $decoded .= chr(ord($char) - 32);
+            $codepoint = ord($char);   // converte o caractere para código numérico
+            $original = $codepoint - 32;
+            $letra = chr($original);   // converte de volta para caractere
+            $decoded .= $letra;
         }
     }
 
     // var_dump($decoded);
-    // exit;
-    // return mb_convert_encoding($decoded, 'UTF-8', 'ISO-8859-1');
-    return $encoded;
+    return $decoded;
 }
-
-
 
 // Autenticação com banco
 if (!empty($email) && !empty($senha)) {
@@ -60,6 +60,4 @@ if (!empty($email) && !empty($senha)) {
 }
 
 echo json_encode($response);
- 
- 
  ?>
