@@ -1,0 +1,28 @@
+body {
+            font-family: Arial, sans-serif;
+            background: #222;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .produto {
+            border-bottom: 1px solid #444;
+            margin-bottom: 10px;
+            padding: 10px 0;
+        }
+
+        .pagar-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .pagar-btn:hover {
+            background-color: #45a049;
+        }

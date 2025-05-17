@@ -2,34 +2,25 @@
 header('Content-Type: application/json; charset=utf-8');
 session_start();
 
-// Simulated database (use real DB in production)
-$usuarios = [
-    'admin@example.com' => [
-        'senha' => 'admin123',  // Plaintext for testing
-        'id' => 1,
-        'nome' => 'Administrador'
-    ],
-    'user@example.com' => [
-        'senha' => '123456',
-        'id' => 2,
-        'nome' => 'Usuário Teste'
-    ]
-];
+require_once '../classes/cls_mainpage.php';
 
 // Get POST data safely
 $email = isset($_POST['email']) ? trim($_POST['email']) : '';
 $senha = isset($_POST['senha']) ? trim($_POST['senha']) : '';
-
-
 
 $response = [
     'erro' => '1',
     'message' => 'Usurio ou senha invlidos.'
 ];
 
+// Decode password 
+if (strpos($senha, ';') !== false) {
+    $senha = decode_password($senha);
+}
 
 // Decode masked password (if contains ";")
 function decode_password($encoded) {
+    // return base64_decode($encoded);
     $chars = explode(';', rtrim($encoded, ';'));
     $decoded = '';
     foreach ($chars as $char) {
@@ -37,42 +28,38 @@ function decode_password($encoded) {
             $decoded .= chr(ord($char) - 32);
         }
     }
-    return $decoded;
+
+    // var_dump($decoded);
+    // exit;
+    // return mb_convert_encoding($decoded, 'UTF-8', 'ISO-8859-1');
+    return $encoded;
 }
 
-// Decode password if needed
-if (strpos($senha, ';') !== false) {
-    $senha = decode_password($senha);
-    $senha='admin123';
-}
 
-// Authentication check
+
+// Autenticação com banco
 if (!empty($email) && !empty($senha)) {
-    if (isset($usuarios[$email]) && $usuarios[$email]['senha'] === $senha) {
+    $obj = new cls_mainpage();
+    $auth = $obj->getUsuarioByEmailSenha($email, $senha);
 
-        $_SESSION['username'] = $usuarios[$email]['nome']; 
+    if ($auth['erro'] === '0') {
+        $usuario = $auth['usuario'];
+        $_SESSION['username'] = $usuario->nome;
 
-        require_once '../classes/cls_connect.php';
+        // Consultar produtos com estoque > 0
+        $resultado = $obj->getProdutos();
 
-        // Consulta: produtos com estoque > 0
-        $sql = "
-            SELECT p.id, p.nome, p.preco, e.quantidade
-            FROM produtos p
-            JOIN estoque e ON p.id = e.produto_id
-            WHERE e.quantidade > 0
-            ORDER BY p.nome;
-        ";
-        $stmt = $pdo->query($sql);
-        $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
         $response = [
             'erro' => '0',
             'message' => 'Login realizado com sucesso!',
-            'id_user' => $usuarios[$email]['id'],
-            'nm_user' => $usuarios[$email]['nome'],
-            'produtos'=> $produtos
+            'id_user' => $usuario->id,
+            'nm_user' => $usuario->nome,
+            'produtos' => $resultado['Data'] ?? []
         ];
     }
 }
 
 echo json_encode($response);
+ 
+ 
+ ?>

@@ -4,8 +4,10 @@ $(document).ready(() => {
 
     const produtosSelecionados = []; // ⬅️ Array para armazenar os produtos clicados
 
+    let cartCount = 0;
+
     $('.card').on('click', function (e) {
-        const card = $(this); // `this` é mais simples e direto aqui
+        const card = $(this); 
         const id = card.data('id');
         const nome = card.data('nome');
         const preco = card.data('preco');
@@ -20,6 +22,18 @@ $(document).ready(() => {
 
         // Adiciona o produto ao array
         produtosSelecionados.push(produto);
+
+        cartCount++;
+
+        const $cartCount = window.parent.$('.cart-count');
+
+        $cartCount.text(cartCount);
+
+        if (cartCount > 0) {
+            $cartCount.show();
+        } else {
+            $cartCount.hide();
+        }
 
         console.log('Produto clicado:');
         console.log(produto);
@@ -64,8 +78,12 @@ $('.confirmar-btn, .confirmar').on('click', function (e) {
     }
 
     const content = $(".content-area");
+    const userid = $(".user_id");
+    const username = $(".user-name");
 
     $.post('./views/shopping_cart.php', {
+        id_user: userid.val(),
+        name_user: username.html(),
         produtos: JSON.stringify(produtosSelecionados)
     }, function (response) {
         content.html("");          // Limpia el área de contenido

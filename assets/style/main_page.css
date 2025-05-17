@@ -95,3 +95,16 @@ body {
 .settings-menu a:hover {
     text-decoration: underline;
 }
+
+/* contador */
+.cart-count {
+    display: none; /* oculto por defecto */
+    background-color: red;
+    color: white;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 50%;
+    position: relative;
+    top: -5px;
+    right: -5px;
+}

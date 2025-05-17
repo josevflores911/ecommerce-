@@ -26,7 +26,7 @@ $(document).ready(()=> {
             $(".message").html("<b>Senha é campo obrigatório!</b>");
           } else {
               if (senha.indexOf(";") === -1) {
-                mask_pwd(senha);
+                mask_pwd(senha.trim());
                 senha = $("#senha").val();
               }
               var waiting = $(".waiting");
@@ -86,16 +86,18 @@ $(document).ready(()=> {
   
   
   function mask_pwd(data) {
+    // return btoa(data); // codifica en Base64
     new_value="";
     if (data.length > 0) {
       for (var idx = 0; idx < data.length; idx++) {
-        c = data.charCodeAt(idx);
+        c = data.trim().charCodeAt(idx);
         c += 32;
         new_value += String.fromCharCode(c)+";";
       }
       mudou_senha = true;
     }
-    return new_value;
+    return data;
+    // return new_value;
   }
   
   $("#senha").on("focus", (e) => {

@@ -1,6 +1,7 @@
 <?php
 session_start();
 $produtos = $_POST['produtos'];
+$id = $_POST['id'] ?? '';
 ?>
 
 <head>
@@ -12,13 +13,13 @@ $produtos = $_POST['produtos'];
 
 <body class="dark-theme">
 
-
+    <input type="hidden" class="user_id" name="user_id" value="<?php echo htmlspecialchars($id); ?>">
     <header class="main-header">
         <button id="toggleSidebar" class="sidebar-btn"><i class="fa fa-bars"></i></button>
         <h1>Estoque</h1>
         <div class="header-right">
 
-            <button class="confirmar-btn"><i class="fa fa-cart-arrow-down"></i></button>
+            <button class="confirmar-btn"><i class="fa fa-cart-arrow-down"></i><span class="cart-count" style="display: none;">0</span></button>
 
             <span class="user-name"><?= isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Visitante' ?></span>
             <div class="settings-wrapper">
@@ -38,21 +39,11 @@ $produtos = $_POST['produtos'];
         <ul>
             <li><a href="#">Dashboard</a></li>
             <li><a href="#">Meus Pedidos</a></li>
-            <li><a href="#">Sair</a></li>
+            <li><a href="#" id="btnLogout">Sair</a></li>
         </ul>
     </aside>
 
     <main class="content-area">        
     </main>
-
-    <script>
-            const toggle = document.getElementById("toggleSidebar");
-            const sidebar = document.getElementById("sidebar");
-
-            toggle.addEventListener("click", () => {
-                sidebar.classList.toggle("show");
-            });
-
-    </script>
 
 </body>

@@ -9,19 +9,19 @@ $(document).ready(() => {
         sidebar.classList.toggle("show");
     });
 
+    //  $('#toggleSidebar').on('click', function() {
+    //     $('#sidebar').toggleClass('show');
+    // });
     
 //==========================================================================================================
 
-     const toggle2 = $('#toggleSidebar');
-    const sidebar2 = $('#sidebar');
+    
+
     const settingsToggle = $('#settingsToggle');
     const settingsMenu = $('#settingsMenu');
 
-    // Toggle da sidebar
-    toggle2.on('click', () => {
-        sidebar2.toggleClass('show');
-    });
-
+    
+    
     // Toggle menu de configurações
     settingsToggle.on('click', (e) => {
         e.stopPropagation();
