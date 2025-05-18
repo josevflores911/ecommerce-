@@ -14,6 +14,8 @@ $userid   = $_POST['id_user'] ?? '';
     
 </head>
 <body >
+    <input type="hidden" id="produtosJson" value='<?= htmlspecialchars(json_encode($produtos), ENT_QUOTES) ?>'>
+    
     <div style="margin-top: 300px;">
         <h1>Resumo da Compra de <?= $username ?></h1>
     

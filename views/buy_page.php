@@ -25,7 +25,7 @@ $produtos = $_POST['produtos'];
                             data-quantidade="<?= $p['quantidade'] ?>">
                             <h3><?= htmlspecialchars($p['nome']) ?></h3>
                             <p><strong>Preço:</strong> R$ <?= number_format($p['preco'], 2, ',', '.') ?></p>
-                            <p><strong>Qtd:</strong> <?= $p['quantidade'] ?></p>
+                            <p data-role="quantidade"><strong>Qtd:</strong> <?= $p['quantidade'] ?></p>
                             <a href="#" class="button">Comprar</a>
                         </div>
                     <?php endforeach; ?>

@@ -19,7 +19,7 @@ $(document).ready(() => {
         // Atualiza a quantidade no HTML e no data attribute
         quantidadeRestante--;
         card.data('quantidade', quantidadeRestante);
-        card.find('p.qtd').html('<strong>Qtd:</strong> ' + quantidadeRestante);
+        card.find('[data-role="quantidade"]').text('Qtd: ' + quantidadeRestante);
 
         // Verifica se produto já está no carrinho
         let existente = produtosSelecionados.find(p => p.id === id);

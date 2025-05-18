@@ -1,8 +1,20 @@
 $(document).ready(function () {
 
     $('.pagar-btn').on('click', function () {
+
+        const produtosSelecionados = JSON.parse(document.getElementById("produtosJson").value);
         
-        $.post("./modules/load_products.php", function (data) {
+        const payload = {
+        produto: JSON.stringify(produtosSelecionados.map(p => ({
+            id: p.id,
+            quantidade: p.quantidade
+        })))
+        };
+
+        $.post("modules/update_stock.php", payload, function (data) { 
+
+        
+            $.post("./modules/load_products.php", function (data) {
             // var resp = JSON.parse(data);
             var resp = data;
             var message = resp.message;
@@ -26,6 +38,8 @@ $(document).ready(function () {
                 var parms = { produtos: resp.produtos };
 
                 $.post("views/buy_page.php", parms, function (data) {
+
+                    
                     content.html("");
                     content.html(data);
 
@@ -34,6 +48,12 @@ $(document).ready(function () {
 
             }
         }, 'json');
+
+            console.log(data);
+        }, 'json');
+
+        
+        
 
     });
 });

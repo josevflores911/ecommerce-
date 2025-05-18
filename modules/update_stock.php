@@ -1,19 +1,31 @@
 <?php
-
 require_once '../classes/cls_mainpage.php';
 
-    $produto = $_POST['produto'];
-    
-    $obj = new cls_mainpage();
-    // $resultado = $obj->atualizarEstoque();
+header('Content-Type: application/json; charset=utf-8');
 
-    $response = [
-        'erro' => '0',
-        'message' => 'Login realizado com sucesso!',
-        'state' =>$resultado
-    ];
+// Verifica se os dados foram enviados
+if (!isset($_POST['produto'])) {
+    echo json_encode([
+        'erro' => '1',
+        'message' => 'Dados não recebidos.'
+    ]);
+    exit;
+}
 
-    echo json_encode($response);
+// Decodifica JSON se for string JSON
+$produtosComprados = is_string($_POST['produto']) 
+    ? json_decode($_POST['produto'], true)
+    : $_POST['produto'];
 
+if (!is_array($produtosComprados)) {
+    echo json_encode([
+        'erro' => '1',
+        'message' => 'Formato inválido de dados.'
+    ]);
+    exit;
+}
 
-?>
+$obj = new cls_mainpage();
+$resultado = $obj->atualizarEstoque($produtosComprados);
+
+echo json_encode($resultado);
