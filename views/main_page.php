@@ -1,7 +1,7 @@
 <?php
 session_start();
 $produtos = $_POST['produtos'];
-$id = $_POST['id'] ?? '';
+$id = $_POST['id_user'] ?? '';
 ?>
 
 <head>

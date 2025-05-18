@@ -17,6 +17,8 @@ $produtosComprados = is_string($_POST['produto'])
     ? json_decode($_POST['produto'], true)
     : $_POST['produto'];
 
+$iduser = $_POST['userId'];    
+
 if (!is_array($produtosComprados)) {
     echo json_encode([
         'erro' => '1',
@@ -26,6 +28,6 @@ if (!is_array($produtosComprados)) {
 }
 
 $obj = new cls_mainpage();
-$resultado = $obj->atualizarEstoque($produtosComprados);
+$resultado = $obj->atualizarEstoqueComPedido($produtosComprados,$iduser);
 
 echo json_encode($resultado);

@@ -94,27 +94,63 @@ class cls_mainpage extends cls_connect
         }
     }
 
-    public function atualizarEstoque($produtosComprados)
+    public function atualizarEstoqueComPedido($produtosComprados, $idUsuario, $cupomId = null)
     {
         $conn = self::$conn;
 
         try {
             $conn->beginTransaction();
 
-            foreach ($produtosComprados as $produto) {
-                $produtoId = intval($produto['id']);
-                $quantidadeComprada = intval($produto['quantidade']);
+            $total = 0;
 
-                $sql = "UPDATE estoque SET quantidade = quantidade - ? WHERE produto_id = ? AND quantidade >= ?";
-                $stmt = $conn->prepare($sql);
-                $stmt->execute([$quantidadeComprada, $produtoId, $quantidadeComprada]);
+            // 1. Calcular o total do pedido
+            foreach ($produtosComprados as $produto) {
+                $total += floatval($produto['preco']) * intval($produto['quantidade']);
+            }
+
+            // 2. Inserir o pedido
+            $sqlPedido = "INSERT INTO pedidos (total, cupom_id, status) VALUES (?, ?, 'pago')";
+            $stmtPedido = $conn->prepare($sqlPedido);
+            $stmtPedido->execute([$total, $cupomId]);
+            $idPedido = $conn->lastInsertId();
+
+            // 3. Relacionar pedido ao usuário
+            $sqlRelacionamento = "INSERT INTO pedido_usuario (id_pedido, id_usuario) VALUES (?, ?)";
+            $stmtRel = $conn->prepare($sqlRelacionamento);
+            $stmtRel->execute([$idPedido, $idUsuario]);
+
+            // 4. Inserir cada produto no pedido e atualizar estoque
+            $sqlProduto = "INSERT INTO pedido_produto (pedido_id, produto_id, quantidade, preco_unitario) VALUES (?, ?, ?, ?)";
+            $stmtProd = $conn->prepare($sqlProduto);
+
+            $sqlEstoque = "UPDATE estoque SET quantidade = quantidade - ? WHERE produto_id = ? AND quantidade >= ?";
+            $stmtEstoque = $conn->prepare($sqlEstoque);
+
+            foreach ($produtosComprados as $produto) {
+                $idProduto = intval($produto['id']);
+                $quantidade = intval($produto['quantidade']);
+                $preco = floatval($produto['preco']);
+
+                // Inserir produto no pedido
+                $stmtProd->execute([$idPedido, $idProduto, $quantidade, $preco]);
+
+                // Atualizar estoque
+                $stmtEstoque->execute([$quantidade, $idProduto, $quantidade]);
             }
 
             $conn->commit();
-            return ['erro' => '0', 'message' => 'Estoque atualizado com sucesso.'];
+
+            return [
+                'erro' => '0',
+                'message' => 'Pedido registrado e estoque atualizado com sucesso.',
+                'pedido_id' => $idPedido
+            ];
         } catch (Exception $e) {
             $conn->rollBack();
-            return ['erro' => '1', 'message' => 'Erro ao atualizar estoque: ' . $e->getMessage()];
+            return [
+                'erro' => '1',
+                'message' => 'Erro ao processar pedido: ' . $e->getMessage()
+            ];
         }
     }
 
