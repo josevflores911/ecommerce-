@@ -16,7 +16,7 @@ $produtos = $_POST['produtos'];
             <h2>Produtos Disponíveis</h2>
             <div class="card-container">
                 <?php if (count($produtos) > 0): ?>
-    
+
                     <?php foreach ($produtos as $p): ?>
                         <div class="card"
                             data-id="<?= $p['id'] ?>"
@@ -29,7 +29,7 @@ $produtos = $_POST['produtos'];
                             <a href="#" class="button">Comprar</a>
                         </div>
                     <?php endforeach; ?>
-    
+
                 <?php else: ?>
                     <p><strong>Nenhum produto disponível em estoque.</strong></p>
                 <?php endif; ?>

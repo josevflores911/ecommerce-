@@ -36,7 +36,7 @@ $(document).ready(()=> {
               waiting.css("display", "block");
               waiting.css("display", "block");
 
-              $.post("modules/valida.php", { email: usuario, senha: senha }, function (data) {
+              $.post("modules/validate.php", { email: usuario, senha: senha }, function (data) {
                   
                   // var resp = JSON.parse(data);
                   var resp = data;
@@ -99,29 +99,6 @@ $(document).ready(()=> {
     return new_value;
   }
   
-  // $("#senha").on("focus", (e) => {
-  //   e.preventDefault();
-  //   e.stopPropagation();
-   
-  //   e.target.value = "";
-  //   $(".message").html("");
-  // });
-  
-  // $("#senha").on("change, blur", (e) => {
-  //   if (mudou_senha == false) {
-  //     var obj = $(e.target);
-  //     obj.val(mask_pwd(obj.val()));
-    
-  //   }
-  // })
-  
-  // $("#btenviar").on("mouseover", (e) => {
-  //   if ($("#senha").val().length > 0) {
-  //     if (mudou_senha == false) {
-  //       $("#senha").val(mask_pwd($("#senha").val()));
-        
-  //     }
-  //   }
-  // });
+
     
   });

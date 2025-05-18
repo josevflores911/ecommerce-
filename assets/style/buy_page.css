@@ -1,18 +1,46 @@
-/* Main Area */
-.content-area {
-    /* display: flex;
-    margin-top: 70px;
-    margin-left: 220px;
-    padding: 20px;
-    gap: 5%; */
+/* Base Styles */
+*, *::before, *::after {
+    box-sizing: border-box;
 }
 
-.contenido{
+:root {
+    --color-bg: #1e1e1e;
+    --color-header-bg: #333;
+    --color-sidebar-bg: #292929;
+    --color-settings-bg: #444;
+    --color-settings-border: #333;
+    --color-text: #f9f9f9;
+    --color-accent: #322fcc;
+    --color-card-bg: #444;
+    --color-card-hover: #555;
+    --color-btn-bg: #4CAF50;
+    --color-btn-hover: #388e3c;
+    --color-danger: #dc3545;
+    --color-success: #28a745;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    margin: 0;
+    padding: 0;
+}
+
+.contenido {
     display: flex;
     margin-top: 100px;
-    margin-left: 220px;
     padding: 20px;
     gap: 5%;
+}
+
+.contenido > div:first-child {
+    width: 60%;
+    margin-right: 30px;
+}
+
+.contenido > div:last-child {
+    margin-top: 70px;
 }
 
 /* Cards Section */
@@ -21,39 +49,31 @@
 }
 .card-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
 }
 .card {
-    background: #444;
-    color: #fff;
+    background: var(--color-card-bg);
     padding: 15px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    transition: transform 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, background-color 0.3s;
 }
 .card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-5px);
+    background-color: var(--color-card-hover);
 }
 .card h3 {
-    margin: 0;
     font-size: 1.2rem;
+    margin-bottom: 10px;
 }
 .card p {
-    margin: 10px 0;
-}
-.card .price {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #28a745;
-}
-.card .quantity {
-    color: #dc3545;
+    margin: 5px 0;
 }
 .card .button,
 .button {
-    background-color: #4CAF50;
-    color: white;
+    background-color: var(--color-btn-bg);
+    color: var(--color-text);
     padding: 8px 12px;
     border: none;
     border-radius: 4px;
@@ -62,20 +82,46 @@
     text-decoration: none;
     display: block;
     width: 100%;
+    text-align: center;
 }
 .card .button:hover {
-    background-color: #388e3c;
+    background-color: var(--color-btn-hover);
 }
 
 /* Filter Section */
 .filter-section {
     flex: 20%;
-    background: #2c2c2c;
+    background: var(--color-sidebar-bg);
     padding: 20px;
     border-radius: 8px;
     min-width: 200px;
 }
+.filter-section input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--color-settings-border);
+    border-radius: 4px;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    margin-bottom: 10px;
+}
+.filter-section select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--color-settings-border);
+    border-radius: 4px;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+}
 
-.confirmar{
-    background-color: #322fcc;
+.confirmar {
+    background-color: var(--color-accent);
+    color: var(--color-text);
+    padding: 10px 15px;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+}
+.confirmar:hover {
+    background-color: #251fb1;
 }

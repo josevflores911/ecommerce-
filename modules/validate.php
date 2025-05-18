@@ -4,49 +4,55 @@ session_start();
 
 require_once '../classes/cls_mainpage.php';
 
-// Get POST data safely
+// Obtener datos POST con seguridad
 $email = isset($_POST['email']) ? trim($_POST['email']) : '';
 $senha = isset($_POST['senha']) ? trim($_POST['senha']) : '';
 
+// Respuesta por defecto
 $response = [
     'erro' => '1',
-    'message' => 'Usuario ou senha invalidos.'
+    'message' => 'Usuário ou senha inválidos.'
 ];
 
-// Decode password 
-if (strpos($senha, ';') !== false) {
-    $senha = decode_password($senha);
-}
-
-// Decode masked password (if contains ";")
-// return base64_decode($encoded);
+// Función para decodificar la contraseña enviada con ";"
 function decode_password($encoded) {
     $chars = explode(';', rtrim($encoded, ';'));
     $decoded = '';
 
     foreach ($chars as $char) {
         if ($char !== '') {
-            $codepoint = ord($char);   // converte o caractere para código numérico
+            $codepoint = ord($char);
             $original = $codepoint - 32;
-            $letra = chr($original);   // converte de volta para caractere
-            $decoded .= $letra;
+            $decoded .= chr($original);
         }
     }
 
-    // var_dump($decoded);
     return $decoded;
 }
 
-// Autenticação com banco
+// Decodificar si es necesario
+if (strpos($senha, ';') !== false) {
+    $senha = decode_password($senha);
+}
+
+// Validar formato de email (opcional, pero recomendado)
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    echo json_encode($response);
+    exit;
+}
+
+// Autenticación con base de datos
 if (!empty($email) && !empty($senha)) {
     $obj = new cls_mainpage();
+
+    // Aquí idealmente getUsuarioByEmailSenha debe validar usando password_verify()
     $auth = $obj->getUsuarioByEmailSenha($email, $senha);
 
     if ($auth['erro'] === '0') {
         $usuario = $auth['usuario'];
         $_SESSION['username'] = $usuario->nome;
+        $_SESSION['user_id'] = $usuario->id; // mejor guardar ID también
 
-        // Consultar produtos com estoque > 0
         $resultado = $obj->getProdutos();
 
         $response = [
@@ -60,4 +66,3 @@ if (!empty($email) && !empty($senha)) {
 }
 
 echo json_encode($response);
- ?>

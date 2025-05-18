@@ -2,104 +2,93 @@ $(document).ready(() => {
 
     console.log("debug");
 
-    const toggle = document.getElementById("toggleSidebar");
-    const sidebar = document.getElementById("sidebar");
+    const sidebarToggle = $("#toggleSidebar");
+    const sidebar = $("#sidebar");
 
-    toggle.addEventListener("click", () => {
-        sidebar.classList.toggle("show");
+    const settingsToggle = $("#settingsToggle");
+    const settingsMenu = $("#settingsMenu");
+
+    const contentArea = $(".content-area");
+    const userIdField = $(".user_id");
+    const userNameField = $(".user-name");
+    const cartCount = $(".cart-count");
+    const messageContainer = $(".message");
+
+    /**
+     * Toggle Sidebar
+     */
+    sidebarToggle.on("click", () => {
+        sidebar.toggleClass("show");
     });
 
-    //  $('#toggleSidebar').on('click', function() {
-    //     $('#sidebar').toggleClass('show');
-    // });
-
-//==========================================================================================================    
-
-    const settingsToggle = $('#settingsToggle');
-    const settingsMenu = $('#settingsMenu');
-
-    // Toggle menu de configurações
-    settingsToggle.on('click', (e) => {
+    /**
+     * Toggle Settings Menu
+     */
+    settingsToggle.on("click", (e) => {
         e.stopPropagation();
-        settingsMenu.toggle();
+        settingsMenu.toggleClass("show");
     });
 
-    // Fechar menu ao clicar fora
-    $(document).on('click', function () {
-        settingsMenu.hide();
+    /**
+     * Close Settings Menu when clicking outside
+     */
+    $(document).on("click", () => {
+        settingsMenu.removeClass("show");
     });
 
-    // Evita que clique dentro do menu o feche
-    settingsMenu.on('click', function (e) {
+    /**
+     * Prevent closing the menu when clicking inside
+     */
+    settingsMenu.on("click", (e) => {
         e.stopPropagation();
     });
 
-//==========================================================================================================
-
-
-    $('#btnLogout').on('click', function (e) {
+    /**
+     * Logout Handler
+     */
+    $(".btnLogout").on("click", (e) => {
         e.preventDefault();
-        $.post('./modules/logout.php', {}, function () {
-            window.location.href = 'index.html';
+        $.post("./modules/logout.php", {}, () => {
+            window.location.href = "index.html";
         });
     });
 
-//==========================================================================================================
-
-    $('#sltDashboard').on('click', function (e) {
+    /**
+     * Load Dashboard
+     */
+    $("#sltDashboard").on("click", (e) => {
         e.preventDefault();
-
-        const content = $(".content-area");
-        const userid = $(".user_id");
-        const username = $(".user-name");
 
         const payload = {
-            id_user: userid.val(),
-            name_user: username.html(),
+            id_user: userIdField.val(),
+            name_user: userNameField.text(),
         };
 
-        $.post('./views/dashboard.html', payload, function (response) {
-
-            content.html("");
-            content.html(response);
+        $.post("./views/dashboard.html", payload, (response) => {
+            contentArea.html(response);
         });
     });
 
-//==========================================================================================================    
-
-    $('#sltPrincipal').on('click', function (e) {
+    /**
+     * Load Principal Page (Products)
+     */
+    $("#sltPrincipal").on("click", (e) => {
         e.preventDefault();
 
-        const userid = $(".user_id");
-        const username = $(".user-name");
+        $.post("./modules/load_products.php", (data) => {
+            const { erro, message, produtos } = data;
 
-        $.post("./modules/load_products.php", function (data) {
+            messageContainer.html(`<b>${message}</b>`);
 
-            var resp = data;
-            var message = resp.message;
+            if (erro === "0") {
+                cartCount.text(0).hide();
 
+                const payload = { produtos };
 
-            $(".message").html("<b>" + message + "</b>");
-
-            if (resp.erro == '0') {
-
-                const $cartCount = window.parent.$('.cart-count');
-
-                $cartCount.text(0);
-                $cartCount.hide();
-
-                // Retornar al main_page vía AJAX
-                const content = $(".content-area");
-                var parms = { produtos: resp.produtos};
-
-
-                $.post("views/buy_page.php", parms, function (dat) {
-                    content.html("");
-                    content.html(dat);
-
+                $.post("views/buy_page.php", payload, (response) => {
+                    contentArea.html(response);
                 });
             }
-        }, 'json');
+        }, "json");
     });
-
 });
