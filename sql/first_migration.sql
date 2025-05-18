@@ -27,10 +27,3 @@ INSERT INTO pedidos (data_pedido, total, cupom_id, status) VALUES
 (NOW(), 299.90, 3, 'cancelado'),  -- Calça + Jaqueta + cupom BOASVINDAS
 (NOW(), 119.90, NULL, 'pago');    -- Calça sem cupom
 
-INSERT INTO pedido_produto (pedido_id, produto_id, quantidade, preco_unitario) VALUES
-(1, 3, 1, 229.90), -- Tênis Esportivo
-(2, 5, 1, 99.90),  -- Mochila
-(3, 1, 1, 49.90),  -- Camiseta
-(4, 2, 1, 119.90), -- Calça
-(4, 4, 1, 179.90), -- Jaqueta
-(5, 2, 1, 119.90); -- Calça

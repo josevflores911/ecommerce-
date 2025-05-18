@@ -37,7 +37,8 @@ $id = $_POST['id'] ?? '';
     <aside class="sidebar" id="sidebar">
         <h3>Menu</h3>
         <ul>
-            <li><a href="#">Dashboard</a></li>
+            <li><a href="#" id="sltPrincipal">Principal</a></li>
+            <li><a href="#" id="sltDashboard">Dashboard</a></li>
             <li><a href="#">Meus Pedidos</a></li>
             <li><a href="#" id="btnLogout">Sair</a></li>
         </ul>

@@ -12,9 +12,9 @@
     // ";
     // $stmt = $pdo->query($sql);
     // $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
     $obj = new cls_mainpage();
     $resultado = $obj->getProdutos();
-
 
     $response = [
         'erro' => '0',
@@ -23,6 +23,5 @@
     ];
 
     echo json_encode($response);
-
 
 ?>

@@ -1,95 +1,68 @@
 $(document).ready(() => {
-
-    //==========================================================================================================    
-
-    const produtosSelecionados = []; // ⬅️ Array para armazenar os produtos clicados
-
-    let cartCount = 0;
+    let produtosSelecionados = window.produtosSelecionados || [];
+    let cartCount = window.cartCount || 0;
 
     $('.card').on('click', function (e) {
-        const card = $(this); 
+        e.preventDefault();
+
+        const card = $(this);
         const id = card.data('id');
         const nome = card.data('nome');
-        const preco = card.data('preco');
-        const quantidade = card.data('quantidade');
+        const preco = parseFloat(card.data('preco'));
+        let quantidadeRestante = parseInt(card.data('quantidade'));
 
-        const produto = {
-            id,
-            nome,
-            preco,
-            quantidade
-        };
-
-        // Adiciona o produto ao array
-        produtosSelecionados.push(produto);
-
-        cartCount++;
-
-        const $cartCount = window.parent.$('.cart-count');
-
-        $cartCount.text(cartCount);
-
-        if (cartCount > 0) {
-            $cartCount.show();
-        } else {
-            $cartCount.hide();
+        if (quantidadeRestante <= 0) {
+            alert("Produto sem estoque.");
+            return;
         }
 
-        console.log('Produto clicado:');
-        console.log(produto);
+        // Atualiza a quantidade no HTML e no data attribute
+        quantidadeRestante--;
+        card.data('quantidade', quantidadeRestante);
+        card.find('p.qtd').html('<strong>Qtd:</strong> ' + quantidadeRestante);
 
-        // Exibe todos os produtos já clicados
-        console.log('Todos os produtos clicados até agora:', produtosSelecionados);
+        // Verifica se produto já está no carrinho
+        let existente = produtosSelecionados.find(p => p.id === id);
+        if (existente) {
+            existente.quantidade++;
+        } else {
+            produtosSelecionados.push({ id, nome, preco, quantidade: 1 });
+        }
+
+        // Atualiza contador no carrinho
+        cartCount++;
+        const $cartCount = window.parent.$('.cart-count');
+        $cartCount.text(cartCount);
+        if (cartCount > 0) $cartCount.show();
+        else $cartCount.hide();
     });
 
-//==========================================================================================================
+    $('.confirmar-btn').on('click', function (e) {
+        e.preventDefault();
 
-     // Abrir nova aba com carrinho
-    // $('.confirmar-btn, .confirmar').on('click', function (e) {
-    //     e.preventDefault();
+        // if (produtosSelecionados.length === 0) {
+        if (cartCount == 0) {
+            alert("Nenhum produto selecionado.");
+            console.log("here",cartCount)
+            return;
+        }
 
-    //     if (produtosSelecionados.length === 0) {
-    //         alert("Nenhum produto selecionado.");
-    //         return;
-    //     }
+        const content = $(".content-area");
+        const userid = $(".user_id").val();
+        const username = $(".user-name").text();
 
-    //     // Cria formulário oculto
-    //     const form = $('<form>', {
-    //         method: 'POST',
-    //         action: './views/shopping_cart.php',
-    //         target: '_blank'
-    //     });
+        const payload = {
+            id_user: userid,
+            name_user: username,
+            produtos: JSON.stringify(produtosSelecionados)
+        };
 
-    //     $('<input>', {
-    //         type: 'hidden',
-    //         name: 'produtos',
-    //         value: JSON.stringify(produtosSelecionados)
-    //     }).appendTo(form);
+        $.post('./views/shopping_cart.php', payload, function (response) {
+            window.produtosSelecionados = [];
+            window.cartCount = 0;
 
-    //     form.appendTo('body').submit().remove();
-    // });
-
-$('.confirmar-btn, .confirmar').on('click', function (e) {
-    e.preventDefault();
-
-    if (produtosSelecionados.length === 0) {
-        alert("Nenhum produto selecionado.");
-        return;
-    }
-
-    const content = $(".content-area");
-    const userid = $(".user_id");
-    const username = $(".user-name");
-
-    $.post('./views/shopping_cart.php', {
-        id_user: userid.val(),
-        name_user: username.html(),
-        produtos: JSON.stringify(produtosSelecionados)
-    }, function (response) {
-        content.html("");          // Limpia el área de contenido
-        content.html(response);   // Inserta el contenido de la respuesta (carrinho)
+            window.parent.$('.cart-count').hide();
+            content.html(response);
+        });
     });
-});
-
-
 });

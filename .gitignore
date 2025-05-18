@@ -5,6 +5,8 @@
 /node_modules/     # Caso use Node para assets
 /delete
 
+notas.txt
+
 # Arquivos de configuração e cache
 .env               # Arquivo com variáveis de ambiente
 .env.*             # Outros arquivos .env (como .env.local)

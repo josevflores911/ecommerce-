@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Adicionar Produto</title>
+  <link rel="stylesheet" href="./assets/style/dashboard.css">
+  <script src="./scripts/dashboard.js?v=1.10" defer></script>
+</head>
+<body>
+
+  <h2>Adicionar Novo Produto</h2>
+
+  <form>
+    <label for="nome">Nome do Produto:</label>
+    <input type="text" name="nome" id="nome" required>
+
+    <label for="descricao">Descrição:</label>
+    <textarea name="descricao" id="descricao" rows="3" required></textarea>
+
+    <label for="preco">Preço (R$):</label>
+    <input type="number" name="preco" id="preco" step="0.01" min="0" required>
+
+    <label for="quantidade">Quantidade em Estoque:</label>
+    <input type="number" name="quantidade" id="quantidade" min="0" required>
+
+    <label for="ativo">Ativo?</label>
+    <select name="ativo" id="ativo">
+      <option value="1">Sim</option>
+      <option value="0">Não</option>
+    </select>
+
+    <button class="btn-carregar" type="button">Salvar Produto</button>
+  </form>
+
+</body>
+</html>
