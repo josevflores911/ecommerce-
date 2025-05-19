@@ -17,6 +17,7 @@ $id = htmlspecialchars($id, ENT_QUOTES, 'UTF-8');
     <meta charset="UTF-8">
     <title>Produtos em Estoque</title>
     <link rel="stylesheet" href="./assets/style/main_page.css">
+    <link rel="stylesheet" href="./assets/style/general.css">
     <script src="./scripts/main_page.js?v=1.10" defer></script>
 </head>
 <body class="dark-theme">

@@ -9,6 +9,7 @@ $userid   = $_POST['id_user'] ?? '';
     <meta charset="UTF-8">
     <title>Resumo da Compra</title>
     <link rel="stylesheet" href="./assets/style/shopping_cart.css">
+    <link rel="stylesheet" href="./assets/style/general.css">
     <script src="./scripts/shopping_cart.js" defer></script>
 
     

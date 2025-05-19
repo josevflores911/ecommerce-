@@ -43,7 +43,7 @@ $(document).ready(() => {
         // if (produtosSelecionados.length === 0) {
         if (cartCount == 0) {
             alert("Nenhum produto selecionado.");
-            console.log("here",cartCount)
+
             return;
         }
 

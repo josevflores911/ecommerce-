@@ -1,0 +1,194 @@
+/* Reset y base global */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #1e1e1e; /* Color base oscuro */
+    color: #f9f9f9; /* Color de texto claro */
+    overflow-x: hidden;
+}
+
+body {
+    position: relative;
+    padding-top: 40px; /* espacio para header o navbar fijo */
+    background-image: url('../images/fundo_gradiente.webp');
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    cursor: default;
+}
+
+body.cursor-wait {
+    cursor: wait;
+}
+
+/* Variables CSS para colores y estilos comunes */
+:root {
+    --color-bg-dark: #1e1e1e;
+    --color-bg-light-transparent: rgba(255, 255, 255, 0.15);
+    --color-text-light: #f9f9f9;
+    --color-accent: #322fcc;
+    --color-btn-bg: #198fc2;
+    --color-btn-bg-hover: #38568e;
+    --color-border-light: rgba(211, 192, 203, 0.5);
+    --border-radius: 12px;
+}
+
+/* Enlaces */
+a {
+    color: var(--color-accent);
+    text-decoration: none;
+    cursor: pointer;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/* Botones genéricos */
+button,
+.button,
+.btn-primary,
+.pagar-btn {
+    background-color: var(--color-btn-bg);
+    color: var(--color-text-light);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 10px 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+button:hover,
+.button:hover,
+.btn-primary:hover,
+.pagar-btn:hover {
+    background-color: var(--color-btn-bg-hover);
+    box-shadow: 0 0 8px var(--color-accent);
+}
+
+/* Formularios y entradas */
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--color-border-light);
+    border-radius: 5px;
+    background-color: transparent;
+    color: var(--color-text-light);
+    transition: border-color 0.3s ease;
+    font-size: 1rem;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--color-accent);
+}
+
+/* Etiquetas */
+label {
+    display: block;
+    color: var(--color-text-light);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    /* background-color: transparent !important; */
+}
+
+/* Contenedores flexibles */
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Contenedores con gap */
+.gap-1 {
+    gap: 1rem;
+}
+
+.gap-2 {
+    gap: 2rem;
+}
+
+/* Tarjetas básicas */
+.card {
+    background-color: rgba(68, 68, 68, 0.85);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    color: var(--color-text-light);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    background-color: rgba(85, 85, 85, 0.95);
+}
+
+/* Layouts comunes */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Mensajes */
+.message, .message-container {
+    margin: 10px 0;
+    font-weight: bold;
+    color: var(--color-accent);
+}
+
+/* Contadores estilo círculo */
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: var(--color-accent);
+    color: var(--color-text-light);
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 50%;
+    display: none;
+}
+
+/* Scroll vertical para contenedores largos */
+.scroll-y {
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+/* Estilos para títulos */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-text-light);
+    letter-spacing: 1.5px;
+    margin-bottom: 1rem;
+}
+
+/* Ocultar elementos */
+.hidden {
+    display: none !important;
+}
+
+/* General pointer cursor for buttons */
+button {
+    cursor: pointer;
+}

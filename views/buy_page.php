@@ -7,6 +7,7 @@ $produtos = $_POST['produtos'];
     <meta charset="UTF-8">
     <title>Produtos em Estoque</title>
     <link rel="stylesheet" href="./assets/style/buy_page.css">
+    <link rel="stylesheet" href="./assets/style/general.css">
     <script src="./scripts/buy_page.js?v=1.10" defer></script>
 </head>
 
